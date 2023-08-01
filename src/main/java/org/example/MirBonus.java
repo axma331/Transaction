@@ -23,8 +23,8 @@ public class MirBonus extends DebitCard {
     }
 
     @Override
-    public void topUp(double value) {
-        super.topUp(value);
+    public void topUpFunds(double value) {
+        super.topUpFunds(value);
         savings += value * 0.00005;
     }
 

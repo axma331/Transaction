@@ -22,7 +22,7 @@ public class CreditCard extends BankCard {
     }
 
     @Override
-    public void topUp(double value) {
+    public void topUpFunds(double value) {
         if (value > 0) {
             double diff = creditLimit - creditBalance;
             if (diff > 0) {
@@ -30,18 +30,20 @@ public class CreditCard extends BankCard {
                         ? creditLimit
                         : creditBalance + value;
             }
-            super.topUp(value - diff);
+            super.topUpFunds(value - diff);
+        } else {
+            System.out.println("Пополнить баланс на отрицательную сумму невозможно!");
         }
     }
 
     @Override
-    public double getAvailableFunds() {
-        return getBalance() + creditBalance;
-    }
-
-    @Override
     public Boolean toPay(double value) {
-        if (value < 0 && value >= getBalance() + creditBalance) {
+        if (value < 0 || value >= getAvailableFunds()) {
+            if (value < 0) {
+                System.out.println("Оплата на отрицательную сумму невозможна");
+            } else {
+                System.out.println("Недостаточно средств для оплаты!");
+            }
             return Boolean.FALSE;
         }
         double remains = value - getBalance();
@@ -54,10 +56,15 @@ public class CreditCard extends BankCard {
     }
 
     @Override
+    public double getAvailableFunds() {
+        return getBalance() + creditBalance;
+    }
+
+    @Override
     public String toString() {
-        return "CreditLimit: " + getCreditLimit() + "\n" +
+        return "Available funds: " + getAvailableFunds() + "\n" +
+                "CreditLimit: " + getCreditLimit() + "\n" +
                 "Credit funds: " + getCreditBalance() + "\n" +
-                "Own funds: " + getBalance() + "\n" +
-                "Available funds: " + getAvailableFunds();
+                "Own funds: " + getBalance();
     }
 }
