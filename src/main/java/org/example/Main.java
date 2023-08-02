@@ -1,61 +1,64 @@
 package org.example;
 
+import java.math.BigDecimal;
+
 public class Main {
     public static void main(String[] args) {
 
         {
             DebitCard card = new DebitCard();
             System.out.println(card + "\n");
-            card.topUpFunds(100);
+            card.topUpFunds(BigDecimal.valueOf(100));
             System.out.println(card + "\n");
-            card.toPay(200);
+            card.pay(BigDecimal.valueOf(200));
             System.out.println(card + "\n");
-            card.toPay(99);
+            card.pay(BigDecimal.valueOf(99));
             System.out.println(card + "\n");
 
         }
+        System.out.println("CreditCard");
         {
             CreditCard card = new CreditCard();
 
-            card.setCreditLimit(10000);
+            card.setCreditLimit(BigDecimal.valueOf(10000));
             System.out.println(card + "\n");
-            card.topUpFunds(5000);
+            card.topUpFunds(BigDecimal.valueOf(5000));
             System.out.println(card + "\n");
-            card.toPay(5000);
+            card.pay(BigDecimal.valueOf(5000));
             System.out.println(card + "\n");
-            card.toPay(3000);
+            card.pay(BigDecimal.valueOf(3000));
             System.out.println(card + "\n");
-            card.topUpFunds(2000);
+            card.topUpFunds(BigDecimal.valueOf(2000));
             System.out.println(card + "\n");
-            card.topUpFunds(2000);
+            card.topUpFunds(BigDecimal.valueOf(2000));
             System.out.println(card + "\n");
         }
-        System.out.println();
+        System.out.println("MirBonus");
         {
             MirBonus card = new MirBonus();
 
             System.out.println(card+ "\n");
-            card.topUpFunds(1500);
+            card.topUpFunds(BigDecimal.valueOf(1500));
             System.out.println(card+ "\n");
-            card.toPay(500);
+            card.pay(BigDecimal.valueOf(500));
             System.out.println(card+ "\n");
-            card.toPay(500);
+            card.pay(BigDecimal.valueOf(500));
             System.out.println(card+ "\n");
-            card.topUpFunds(1500);
+            card.topUpFunds(BigDecimal.valueOf(1500));
             System.out.println(card+ "\n");
         }
-        System.out.println();
+        System.out.println("Cashback");
         {
             MirCreditCashback card = new MirCreditCashback();
 
             System.out.println(card+ "\n");
-            card.topUpFunds(15000);
+            card.topUpFunds(BigDecimal.valueOf(15000));
             System.out.println(card+ "\n");
-            card.toPay(5000);
+            card.pay(BigDecimal.valueOf(5000));
             System.out.println(card+ "\n");
-            card.toPay(4000);
+            card.pay(BigDecimal.valueOf(4000));
             System.out.println(card+ "\n");
-            card.toPay(5500);
+            card.pay(BigDecimal.valueOf(5500));
             System.out.println(card+ "\n");
         }
     }

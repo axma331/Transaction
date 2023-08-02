@@ -1,24 +1,30 @@
 package org.example;
 
+import java.math.BigDecimal;
+
 public abstract class BankCard {
 
-    private double balance;
+    private BigDecimal balance;
 
-    public double getBalance() {
+    public BankCard() {
+        this.balance = BigDecimal.ZERO;
+    }
+
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void topUpFunds(double value) {
-        if (value >= 0) {
-            balance += value;
+    public void topUpFunds(BigDecimal value) {
+        if (value.compareTo(BigDecimal.ZERO) >= 0) {
+            balance = balance.add(value);
         } else {
             System.out.println("Невозможно пополнить баланс на отрицательную сумму!");
         }
     }
 
-    public Boolean toPay(double value) {
-        if (value > 0 && balance >= value) {
-            balance -= value;
+    public Boolean pay(BigDecimal value) {
+        if (value.compareTo(BigDecimal.ZERO) > 0 && balance.compareTo(value) >= 0) {
+            balance = balance.subtract(value);
             return Boolean.TRUE;
         } else {
             System.out.println("Недостаточно средств для оплаты!");
@@ -26,5 +32,5 @@ public abstract class BankCard {
         return Boolean.FALSE;
     }
 
-    public abstract double getAvailableFunds();
+    public abstract BigDecimal getAvailableFunds();
 }

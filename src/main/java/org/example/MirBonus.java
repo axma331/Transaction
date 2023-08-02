@@ -1,42 +1,55 @@
 package org.example;
 
+import java.math.BigDecimal;
+
 public class MirBonus extends DebitCard {
 
-    private double bonus;
-    private double savings;
+    private BigDecimal bonus;
+    private BigDecimal savings;
 
-    public double getBonus() {
+    public MirBonus() {
+        this.bonus = BigDecimal.ZERO;
+        this.savings = BigDecimal.ZERO;
+    }
+
+    public BigDecimal getBonus() {
         return bonus;
     }
 
-    public double getSavings() {
+    public BigDecimal getSavings() {
         return savings;
     }
 
     @Override
-    public Boolean toPay(double value) {
-        Boolean isSuccess = super.toPay(value);
+    public Boolean pay(BigDecimal value) {
+        Boolean isSuccess = super.pay(value);
         if (isSuccess) {
-            bonus += value * 0.001;
+            bonus = bonus.add(
+                    value.multiply(BigDecimal.valueOf(0.001))
+            );
         }
-       return isSuccess;
+        return isSuccess;
     }
 
     @Override
-    public void topUpFunds(double value) {
+    public void topUpFunds(BigDecimal value) {
         super.topUpFunds(value);
-        savings += value * 0.00005;
+        savings = savings.add(
+                value.multiply(BigDecimal.valueOf(0.00005))
+        );
     }
 
     @Override
-    public double getAvailableFunds() {
-        return super.getAvailableFunds() + bonus + savings;
+    public BigDecimal getAvailableFunds() {
+        return super.getAvailableFunds().add(
+                bonus.add(savings)
+        );
     }
 
     @Override
     public String toString() {
         return super.toString() + "\n" +
-                "Bonus: " + bonus + "\n" +
-                "Savings: "+ savings;
+                "Bonus: " + bonus.toPlainString() + "\n" +
+                "Savings: " + savings.toPlainString();
     }
 }

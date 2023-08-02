@@ -1,29 +1,38 @@
 package org.example;
 
-public class MirCreditCashback extends CreditCard {
-    private double cashback;
+import java.math.BigDecimal;
 
-    public double getCashback() {
+public class MirCreditCashback extends CreditCard {
+
+    private BigDecimal cashback;
+
+    public MirCreditCashback() {
+        this.cashback = BigDecimal.ZERO;
+    }
+
+    public BigDecimal getCashback() {
         return cashback;
     }
 
     @Override
-    public Boolean toPay(double value) {
-        Boolean isSuccess = super.toPay(value);
-        if (isSuccess && value >= 5000) {
-            cashback += value * 0.005;
+    public Boolean pay(BigDecimal value) {
+        Boolean isSuccess = super.pay(value);
+        if (isSuccess && value.compareTo(BigDecimal.valueOf(5000)) >= 0) {
+            cashback = cashback.add(
+                    value.multiply(BigDecimal.valueOf(0.005))
+            );
         }
         return isSuccess;
     }
 
     @Override
-    public double getAvailableFunds() {
-        return super.getAvailableFunds() + cashback;
+    public BigDecimal getAvailableFunds() {
+        return super.getAvailableFunds().add(cashback);
     }
 
     @Override
     public String toString() {
         return super.toString() + "\n" +
-                "Cashback: " + cashback;
+                "Cashback: " + cashback.toPlainString();
     }
 }

@@ -1,16 +1,18 @@
 package org.example;
 
+import java.math.BigDecimal;
+
 public class DebitCard extends BankCard {
 
     @Override
-    public double getAvailableFunds() {
+    public BigDecimal getAvailableFunds() {
         return getBalance();
     }
 
     @Override
     public String toString() {
-        return "Available funds: " + getAvailableFunds() + "\n" +
-                "Own funds: " + getBalance();
+        return "Available funds: " + getAvailableFunds().toPlainString() + "\n" +
+                "Own funds: " + getBalance().toPlainString();
     }
 
 }
