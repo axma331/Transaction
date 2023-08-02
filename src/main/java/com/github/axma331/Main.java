@@ -1,4 +1,9 @@
-package org.example;
+package com.github.axma331;
+
+import com.github.axma331.cards.CreditCard;
+import com.github.axma331.cards.DebitCard;
+import com.github.axma331.cards.MirBonus;
+import com.github.axma331.cards.MirCreditCashback;
 
 import java.math.BigDecimal;
 

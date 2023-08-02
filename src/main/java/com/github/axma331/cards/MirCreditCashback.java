@@ -1,25 +1,19 @@
-package org.example;
+package com.github.axma331.cards;
 
+import lombok.Getter;
 import java.math.BigDecimal;
 
+@Getter
 public class MirCreditCashback extends CreditCard {
 
-    private BigDecimal cashback;
-
-    public MirCreditCashback() {
-        this.cashback = BigDecimal.ZERO;
-    }
-
-    public BigDecimal getCashback() {
-        return cashback;
-    }
+    private BigDecimal cashback = BigDecimal.ZERO;
 
     @Override
-    public Boolean pay(BigDecimal value) {
-        Boolean isSuccess = super.pay(value);
-        if (isSuccess && value.compareTo(BigDecimal.valueOf(5000)) >= 0) {
+    public Boolean pay(BigDecimal amount) {
+        Boolean isSuccess = super.pay(amount);
+        if (isSuccess && amount.compareTo(BigDecimal.valueOf(5000)) >= 0) {
             cashback = cashback.add(
-                    value.multiply(BigDecimal.valueOf(0.005))
+                    amount.multiply(BigDecimal.valueOf(0.005))
             );
         }
         return isSuccess;

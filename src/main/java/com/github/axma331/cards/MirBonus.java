@@ -1,41 +1,30 @@
-package org.example;
+package com.github.axma331.cards;
 
+import lombok.Getter;
 import java.math.BigDecimal;
 
+@Getter
 public class MirBonus extends DebitCard {
 
-    private BigDecimal bonus;
-    private BigDecimal savings;
-
-    public MirBonus() {
-        this.bonus = BigDecimal.ZERO;
-        this.savings = BigDecimal.ZERO;
-    }
-
-    public BigDecimal getBonus() {
-        return bonus;
-    }
-
-    public BigDecimal getSavings() {
-        return savings;
-    }
+    private BigDecimal bonus = BigDecimal.ZERO;
+    private BigDecimal savings = BigDecimal.ZERO;
 
     @Override
-    public Boolean pay(BigDecimal value) {
-        Boolean isSuccess = super.pay(value);
+    public Boolean pay(BigDecimal amount) {
+        Boolean isSuccess = super.pay(amount);
         if (isSuccess) {
             bonus = bonus.add(
-                    value.multiply(BigDecimal.valueOf(0.001))
+                    amount.multiply(BigDecimal.valueOf(0.001))
             );
         }
         return isSuccess;
     }
 
     @Override
-    public void topUpFunds(BigDecimal value) {
-        super.topUpFunds(value);
+    public void topUpFunds(BigDecimal amount) {
+        super.topUpFunds(amount);
         savings = savings.add(
-                value.multiply(BigDecimal.valueOf(0.00005))
+                amount.multiply(BigDecimal.valueOf(0.00005))
         );
     }
 

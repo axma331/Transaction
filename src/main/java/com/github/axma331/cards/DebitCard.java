@@ -1,4 +1,4 @@
-package org.example;
+package com.github.axma331.cards;
 
 import java.math.BigDecimal;
 

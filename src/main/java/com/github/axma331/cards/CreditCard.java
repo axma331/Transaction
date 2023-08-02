@@ -1,15 +1,17 @@
-package org.example;
+package com.github.axma331.cards;
 
+import lombok.Getter;
 import java.math.BigDecimal;
 
+@Getter
 public class CreditCard extends BankCard {
 
     private BigDecimal creditBalance;
     private BigDecimal creditLimit;
 
     public CreditCard() {
-        this.creditBalance = BigDecimal.ZERO;
-        this.creditLimit = BigDecimal.ZERO;
+        creditLimit = BigDecimal.valueOf(10000);
+        creditBalance = creditLimit;
     }
 
     public void setCreditLimit(BigDecimal creditLimit) {
@@ -20,45 +22,37 @@ public class CreditCard extends BankCard {
         }
     }
 
-    public BigDecimal getCreditLimit() {
-        return creditLimit;
-    }
-
-    public BigDecimal getCreditBalance() {
-        return creditBalance;
-    }
-
     @Override
-    public void topUpFunds(BigDecimal value) {
-        if (value.compareTo(BigDecimal.ZERO) > 0) {
+    public void topUpFunds(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) > 0) {
             BigDecimal diff = creditLimit.subtract(creditBalance);
             if (diff.compareTo(BigDecimal.ZERO) > 0) {
-                creditBalance = value.compareTo(diff) > 0
+                creditBalance = amount.compareTo(diff) > 0
                         ? creditLimit
-                        : creditBalance.add(value);
+                        : creditBalance.add(amount);
             }
-            super.topUpFunds(value.subtract(diff));
+            super.topUpFunds(amount.subtract(diff));
         } else {
             System.out.println("Пополнить баланс на отрицательную сумму невозможно!");
         }
     }
 
     @Override
-    public Boolean pay(BigDecimal value) {
-        if (value.compareTo(BigDecimal.ZERO) < 0 || value.compareTo(getAvailableFunds()) >= 0) {
-            if (value.compareTo(BigDecimal.ZERO) < 0) {
+    public Boolean pay(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) < 0 || amount.compareTo(getAvailableFunds()) >= 0) {
+            if (amount.compareTo(BigDecimal.ZERO) < 0) {
                 System.out.println("Оплата на отрицательную сумму невозможна");
             } else {
                 System.out.println("Недостаточно средств для оплаты!");
             }
             return Boolean.FALSE;
         }
-        BigDecimal remains = value.subtract(getBalance());
+        BigDecimal remains = amount.subtract(getBalance());
         if (remains.compareTo(BigDecimal.ZERO) > 0) {
             creditBalance = creditBalance.add(remains);
             return super.pay(getBalance());
         } else {
-            return super.pay(value);
+            return super.pay(amount);
         }
     }
 
